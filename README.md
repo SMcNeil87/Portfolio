@@ -92,6 +92,8 @@ All three HDDs in the Supermicro are the same size, making them impossible to te
 **GRUB rescue prompt on first Ubuntu boot attempt**
 Expected the Ubuntu installer menu, got a `Welcome to GRUB!` prompt with a flashing cursor. The issue was booting in legacy mode instead of UEFI. Rebooted, selected the UEFI-prefixed USB entry in the Supermicro boot menu, and the installer loaded normally.
 
+**Missing DHCP Option 003 Router caused domain clients to receive IP and DNS assignments correctly but no default gateway, resulting in loss of internet connectivity. Fixed by configuring Option 003 via DHCP Manager Scope Options
+
 -----
 
 ## Skills This Lab Covers
