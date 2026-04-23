@@ -95,15 +95,29 @@ Expected the Ubuntu installer menu, got a `Welcome to GRUB!` prompt with a flash
 **Missing DHCP Option 003** Router caused domain clients to receive IP and DNS assignments correctly but no default gateway, resulting in loss of internet connectivity. Fixed by configuring Option 003 via DHCP Manager Scope Options
 
 **Ubuntu Domain Join Failure**
-apt lock requiring manual cleanup
 
-Kerberos auth failing due to incorrect timezone on Ubuntu VM
+Ubuntu VM domain join — Kerberos authentication failure
+Problem: realm join failing with “Couldn’t authenticate to AD” despite correct credentials and Domain Admin permissions.
+Root cause: Ubuntu VM defaulted to UTC timezone, causing system time to be hours ahead of the domain controller. Kerberos requires all domain members to be within 5 minutes of each other — the skew exceeded that threshold and rejected authentication.
+Resolution:
 
-UTC defaulting to wrong time causing 5+ minute Kerberos skew
+sudo timedatectl set-timezone America/Chicago
+sudo apt install -y ntpdate
+sudo ntpdate 192.168.0.9
+sudo realm join --user=Administrator yourdomain.local
 
-Fixed by setting correct timezone and syncing NTP against domain controller
 
------
+apt lock issue encountered during package install:
+
+sudo rm /var/lib/dpkg/lock-frontend
+sudo rm /var/lib/dpkg/lock
+sudo rm /var/lib/apt/lists/lock
+sudo dpkg --configure -a
+sudo apt-get clean
+sudo apt-get update
+sudo apt-get install -f
+
+
 
 ## Skills This Lab Covers
 
