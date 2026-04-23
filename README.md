@@ -84,12 +84,15 @@ Roughly in order of what’s next:
 Real problems I ran into and how I solved them.
 
 **PXE boot not working initially**
+
 Clients were getting DHCP addresses but not picking up the boot file. DHCP options weren’t set correctly — Option 66 needed to point to the WDS server IP and Option 67 needed the full path to the UEFI boot file. Once those were corrected PXE worked consistently.
 
 **Ubuntu installer drive selection with identical HDDs**
+
 All three HDDs in the Supermicro are the same size, making them impossible to tell apart in the Ubuntu installer by size alone. Before booting the USB I checked Windows Disk Management and noted the partition state of each drive. The correct target showed as having a primary partition structure but no actual data. Selected that one and the install went cleanly.
 
 **GRUB rescue prompt on first Ubuntu boot attempt**
+
 Expected the Ubuntu installer menu, got a `Welcome to GRUB!` prompt with a flashing cursor. The issue was booting in legacy mode instead of UEFI. Rebooted, selected the UEFI-prefixed USB entry in the Supermicro boot menu, and the installer loaded normally.
 
 **Missing DHCP Option 003** Router caused domain clients to receive IP and DNS assignments correctly but no default gateway, resulting in loss of internet connectivity. Fixed by configuring Option 003 via DHCP Manager Scope Options
