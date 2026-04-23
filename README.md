@@ -99,6 +99,7 @@ Expected the Ubuntu installer menu, got a `Welcome to GRUB!` prompt with a flash
 Ubuntu VM domain join — Kerberos authentication failure
 
 Problem: realm join failing with “Couldn’t authenticate to AD” despite correct credentials and Domain Admin permissions.
+
 Root cause: Ubuntu VM defaulted to UTC timezone, causing system time to be hours ahead of the domain controller. Kerberos requires all domain members to be within 5 minutes of each other — the skew exceeded that threshold and rejected authentication.
 
 Resolution:
